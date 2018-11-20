@@ -2,7 +2,7 @@ const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs');
 var app = express();
-
+const port = process.env.PORT || 3001;
 hbs.registerPartials(__dirname + '/views/partials')
 app.set('view engine', 'hbs')
 
@@ -22,10 +22,8 @@ app.use((req, res, next)=>{
 // app.use((req, res, next) =>{
 //         res.render('maintenance.hbs')
 // });
-
+  
 app.use(express.static(__dirname + '/public'));
-
-
 hbs.registerHelper('getCurrentYear', () => {
         return new Date().getFullYear();
 });
@@ -42,10 +40,11 @@ app.get('/', (req, res) => {
                         'songs',
                         'poems',
                         'movies'
-                ],
+                        ],
                 address: 'nashik'
         })
 });
+
 app.get('/about', (req, res) => {
         // res.send('you are on about page')     
         res.render('about.hbs', {
@@ -58,8 +57,9 @@ app.get('/bad', (req, res) => {
                 errorMessage: 'Unable to handle request'
         })
 });
-app.listen(3001, () => {
-        console.log('server is up and running on posr 3001');
+
+app.listen(port, () => {
+        console.log('Server is Running on', port);
 });
 
 app.get('/home', (req, res) => {
